@@ -15,6 +15,22 @@ const classColors =[
 document.addEventListener('DOMContentLoaded',function(){
     // 固定使用花瓣長度(2)和花瓣寬度(3)
     loadKnnData()
+
+    //綁定K值 slider事件
+    const kSlider = document.getElementById('k-slider')
+    const kValue = document.getElementById('k-value')
+
+    kSlider.addEventListener('input', function(){
+        //console.log('input觸發')
+        kValue.textContent = this.value
+    })
+    
+    kSlider.addEventListener('change',function(){
+        //console.log('change觸發')
+        currentK = parseInt(this.value);
+        loadKnnData()
+    })
+
 })
 
 async function loadKnnData(){
