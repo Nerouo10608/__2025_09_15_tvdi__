@@ -49,6 +49,9 @@ async function loadKnnData(){
 
             // 更新評估指標
             updateMetrics(data.metrics)
+
+            // 更新模型資訊
+            updateModelInfo(data.description, data.k_neighbors)
         }else{
             showError(data.error)
         }
@@ -251,6 +254,7 @@ function renderChart(data){
     
 }
 
+//更新評估指標
 function updateMetrics(metrics){
     /*console.table(metrics)*/
     const accuracy = (metrics.accuracy * 100).toFixed(1)
@@ -267,6 +271,10 @@ function updateMetrics(metrics){
 
 }
 
+// 更新模型資訊
+function updateModelInfo(description, k_neighbors){
+
+}
 // 顯示分類結果
 function showClassificationResult(dataPoint, datasetType, index){
     const container = document.getElementById('classification-result')
