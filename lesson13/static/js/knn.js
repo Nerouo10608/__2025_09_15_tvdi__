@@ -46,6 +46,9 @@ async function loadKnnData(){
 
             // 繪制圖表
             renderChart(data)
+
+            // 更新評估指標
+            updateMetrics(data.metrics)
         }else{
             showError(data.error)
         }
@@ -247,6 +250,23 @@ function renderChart(data){
 
     
 }
+
+function updateMetrics(metrics){
+    /*console.table(metrics)*/
+    const accuracy = (metrics.accuracy * 100).toFixed(1)
+    const accuracyElement = document.getElementById('accuracy')
+    accuracyElement.textContent = accuracy + '%'
+
+    if(metrics.accuracy >= 0.95){
+        accuracyElement.style.color = '#4caf59'
+    }else if (metrics >= 0.85){
+        accuracyElement.style.color = '#ff9800'
+    }else{
+        accuracyElement.style.color = '#f44336'
+    }
+
+}
+
 // 顯示分類結果
 function showClassificationResult(dataPoint, datasetType, index){
     const container = document.getElementById('classification-result')
