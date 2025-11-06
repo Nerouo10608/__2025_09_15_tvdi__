@@ -273,7 +273,12 @@ function updateMetrics(metrics){
 
 // 更新模型資訊
 function updateModelInfo(description, k_neighbors){
-
+    document.getElementById('dataset-name').textContent = description.dataset
+    document.getElementById('total-samples').textContent = description.samples
+    document.getElementById('train-size').textContent = description.train_size
+    document.getElementById('test-size').textContent = description.test_size
+    document.getElementById('num-classes').textContent = description.classes
+    document.getElementById('current-k').textContent = k_neighbors
 }
 // 顯示分類結果
 function showClassificationResult(dataPoint, datasetType, index){
