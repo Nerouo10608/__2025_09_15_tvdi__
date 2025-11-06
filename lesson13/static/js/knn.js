@@ -82,7 +82,6 @@ function renderChart(data){
         }
         
     }
-    console.table(data.data.test)
     // 測試資料(按類別和預測結果)
 
     for(let classIdx = 0; classIdx < numClasses; classIdx++){
@@ -140,6 +139,22 @@ function renderChart(data){
         options:{
             responsive: true,
             maintainAspectRatio: false,
+            onClick: function(evt, activeElements){
+                //點擊資料點(標記)時觸發
+                if(activeElements.length > 0){
+                    const element = activeElements[0]
+                    const datasetIndex = element.datasetIndex
+                    const index = element.index
+                    const dataset = chart.data.datasets[datasetIndex]
+                    const point = dataset.data[index]
+                    //console.log(point)
+
+                    // 判斷是訓練資料還是測試資料
+                    //console.table(dataset)
+                    const datasetType = dataset.label.includes('訓練') ? 'train' : 'test' ;
+                    showClassificationResult(point, datasetType, index)
+                }              
+            },
             plugins:{
                 title:{
                     display: true,
@@ -198,6 +213,46 @@ function renderChart(data){
     })
 
     
+}
+// 顯示分類結果
+function showClassificationResult(dataPoint, datasetType, index){
+    const container = document.getElementById('classification-result')
+    // 取得特徵值
+    const featureX = dataPoint.x;
+    const featureY = dataPoint.y;
+    const actualLabel = dataPoint.label;
+    const prediction = dataPoint.prediction !== undefined ? dataPoint.prediction : actualLabel
+
+    //判斷是否預測正確
+    const isCorrect = actualLabel === prediction
+    
+    //建立HTML
+    const html = `
+        <div class="feature-display">
+            <div class="feature-item">
+                <div class="label">${featureNames[2]}</div>
+                <div class="value">${featureX.toFixed(2)} cm</div>
+            </div>
+            <div class="feature-item">
+                <div class="label">${featureNames[3]}</div>
+                <div class="value">${featureY.toFixed(2)} cm</div>
+            </div>
+        </div>
+        <div class="result-display">
+            <div class="actual-label">實際品種</div>
+            <div class="species-name">${targetNames[actualLabel]}</div>
+            ${datasetType === 'test' ? `
+                <div class="prediction-status ${isCorrect ? 'correct' : 'wrong'}">
+                    ${isCorrect ? '✓ 模型預測正確！' : '✗ 模型預測為：' + targetNames[prediction]}
+                </div>
+            ` : `
+                <div class="prediction-status" style="opacity: 0.7;">
+                    訓練資料
+                </div>
+            `}
+        </div>
+    `
+    container.innerHTML = html
 }
 
 // 顯示/隱藏載入狀態
