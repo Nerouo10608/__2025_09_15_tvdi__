@@ -98,4 +98,7 @@ https://www.youtube.com/watch?v=cKklDrGLHCY
 ## 2025_11_06_早上
 https://www.youtube.com/watch?v=lelfzfLMFbY
 
+## 2025_11_06_下午
+https://www.youtube.com/watch?v=EHlVk2CMVOU
+
 ---
